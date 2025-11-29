@@ -3,32 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>저격수형 상세 분석</title>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>The Sniper Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --bg-color: #f9f7f1;
             --text-primary: #2c3e50;
             --card-bg: #ffffff;
-            --type-color: #0984e3; /* 저격수: 블루 */
+            --type-color: #0984e3; /* Blue */
         }
         
         body { font-family: 'Pretendard', sans-serif; background: var(--bg-color); color: var(--text-primary); margin: 0; padding: 40px 20px; line-height: 1.7;}
         .container { max-width: 800px; margin: 0 auto; }
-        .nav-back { display: inline-block; margin-bottom: 40px; text-decoration: none; color: #888; font-weight: 600; transition: color 0.3s; }
+        
+        h1, h2, .type-tag, .box-title, .nav-back { font-family: 'Merriweather', serif; }
+
+        .nav-back { display: inline-block; margin-bottom: 40px; text-decoration: none; color: #888; font-weight: 600; transition: color 0.3s; font-size: 0.9rem; }
         .nav-back:hover { color: var(--text-primary); }
+
         .type-header { border-bottom: 4px solid var(--type-color); padding-bottom: 30px; margin-bottom: 50px; animation: slideDown 0.8s ease-out; }
-        .type-tag { font-family: 'Merriweather', serif; font-size: 0.9rem; color: var(--type-color); letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
-        .type-title { font-size: 3.2rem; margin: 15px 0; font-family: 'Merriweather', serif; color: var(--text-primary); }
-        .type-desc { font-size: 1.3rem; color: #555; font-style: italic; }
+        .type-tag { font-size: 0.9rem; color: var(--type-color); letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
+        .type-title { font-size: 3.5rem; margin: 10px 0; color: var(--text-primary); font-weight: 900; }
+        .type-desc { font-size: 1.2rem; color: #555; font-style: italic; font-family: 'Pretendard', sans-serif; }
+
         .content-box { background: var(--card-bg); padding: 40px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); margin-bottom: 30px; animation: fadeIn 1s ease-out 0.3s backwards; border: 1px solid #eee; }
-        .box-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 25px; color: var(--type-color); border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; }
+        .box-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 25px; color: var(--type-color); border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; }
         .content-text { font-size: 1.05rem; color: #444; }
+        
         ul { padding-left: 0; list-style: none; }
         li { margin-bottom: 15px; padding-left: 20px; position: relative; }
         li::before { content: "•"; color: var(--type-color); font-weight: bold; position: absolute; left: 0; top: 0;}
         strong { color: #222; font-weight: 700; }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -40,12 +47,12 @@
 
     <header class="type-header">
         <span class="type-tag">TYPE 01 : ANALYST</span>
-        <h1 class="type-title">The Sniper (저격수)</h1>
+        <h1 class="type-title">The Sniper(저격수)</h1>
         <p class="type-desc">고감도 센서와 고출력 엔진을 가진, 근본 원리 탐구자</p>
     </header>
 
     <section class="content-box">
-        <h2 class="box-title">🧠 신경 메커니즘 (Neuro-Mechanism)</h2>
+        <h2 class="box-title">Neuro-Mechanism (신경 메커니즘)</h2>
         <div class="content-text">
             <p style="margin-bottom: 15px;">저격수의 뇌는 <strong>'낮은 도파민 기저치(Low Tonic)'</strong>와 <strong>'폭발적인 위상성 반응(High Phasic)'</strong>의 극단적인 대비를 특징으로 합니다.</p>
             <ul>
@@ -57,7 +64,7 @@
     </section>
 
     <section class="content-box">
-        <h2 class="box-title">👤 성격 및 행동 (Behavioral Profile)</h2>
+        <h2 class="box-title">Behavioral Profile (성격 및 행동)</h2>
         <div class="content-text">
             <ul>
                 <li><strong>비타협적 본질 추구:</strong> 겉치레나 무의미한 사교 활동(Small talk)을 극도로 피곤해합니다. "그래서 결론이 뭔데?", "왜 그렇게 되는데?"라는 질문이 항상 머릿속에 있습니다.</li>
@@ -69,11 +76,11 @@
     </section>
 
     <section class="content-box">
-        <h2 class="box-title">⚡ 자율신경계 (ANS Profile): 고출력</h2>
+        <h2 class="box-title">ANS Profile (자율신경계)</h2>
         <div class="content-text">
-            <p style="margin-bottom: 15px;">일반인(40/40)과 달리, 저격수는 <strong>[교감신경 상위 1% / 부교감신경 상위 10%]</strong>라는 F1 머신급 엔진을 가지고 있습니다.</p>
+            <p style="margin-bottom: 15px;">일반인과 달리, 저격수는 교감신경(가속)과 부교감신경(브레이크)의 활성도가 <strong>모두 평균보다 현저히 높은 '고출력 엔진(High-Output)'</strong>을 가지고 있습니다.</p>
             <ul>
-                <li><strong>초경계성 (Hyper-vigilance):</strong> 가속 페달(교감)이 민감하여 항상 주변의 위협이나 변화를 감지합니다. 이로 인해 <strong>'전기 과민성(Electrical Sensitivity)'</strong>과 같은 극도로 예민한 감각 반응(근육 떨림 등)을 보이기도 합니다.</li>
+                <li><strong>초경계성 (Hyper-vigilance):</strong> 가속 페달(교감)이 민감하여 항상 주변의 위협이나 변화를 감지합니다. 이로 인해 <strong>'전기 과민성(Electrical Sensitivity)'</strong>과 같은 극도로 예민한 감각 반응을 보일 확률이 높습니다.</li>
                 <li><strong>압도적인 스트레스 회복력:</strong> 강력한 브레이크(부교감) 덕분에, 급성 위기 상황에서도 무너지지 않고 빠르게 냉정을 되찾습니다.</li>
                 <li><strong>Tired but Wired:</strong> 항상 엔진이 예열된 상태이므로, 겉으로는 침착해 보여도 내면의 기저 불안감이 높고 에너지 소모가 큽니다.</li>
             </ul>
@@ -81,7 +88,7 @@
     </section>
 
     <section class="content-box">
-        <h2 class="box-title">💼 최적의 환경과 생존 전략</h2>
+        <h2 class="box-title">Optimum Environment (최적의 환경)</h2>
         <div class="content-text">
             <ul>
                 <li><strong>저격수의 둥지 (The Nest):</strong> 소음, 시선, 전자기파 등 불필요한 '노이즈'를 완벽하게 차단할 수 있는 독립된 공간이 필수적입니다. 오픈 오피스는 최악의 환경입니다.</li>
