@@ -12,7 +12,7 @@
             --bg-color: #f9f7f1;
             --text-primary: #2c3e50;
             --accent-color: #c0392b;
-            --hover-color: #34495e; /* 통일된 호버 색상 (차분한 네이비) */
+            --hover-color: #34495e; 
         }
 
         body { font-family: 'Pretendard', sans-serif; background: var(--bg-color); color: var(--text-primary); margin: 0; padding: 0; height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; }
@@ -25,28 +25,28 @@
         .question-box { margin-bottom: 40px; min-height: 80px; display: flex; align-items: center; justify-content: center; }
         .question-text { font-size: 1.4rem; font-weight: 700; line-height: 1.5; word-break: keep-all; font-family: 'Merriweather', serif; }
 
-        /* 5점 척도 버튼 스타일 */
         .options { display: flex; gap: 10px; justify-content: space-between; margin-top: 30px; }
         
         .option-btn {
             width: 100%;
             padding: 15px 5px;
-            border: 2px solid #eee; /* 기본 테두리: 회색 */
+            border: 2px solid #eee; 
             background: white;
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.1s; /* 반응속도 빠르게 수정 */
             font-size: 0.9rem;
             font-weight: 600;
-            color: #777; /* 기본 글자: 회색 */
+            color: #777; 
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            /* 모바일 터치 하이라이트 제거 */
+            -webkit-tap-highlight-color: transparent; 
         }
 
-        /* 큰 동그라미 아이콘 (기본 상태) */
         .circle { 
             width: 20px; height: 20px; 
             border-radius: 50%; 
@@ -55,26 +55,37 @@
             background: white;
         }
 
-        /* [수정됨] 호버 효과 통일 (심리적 편향 제거) */
-        .option-btn:hover { 
-            transform: translateY(-3px); 
-            border-color: var(--hover-color); /* 테두리 진해짐 */
-            color: var(--hover-color); /* 글자 진해짐 */
-            background-color: #f4f6f8; /* 배경 아주 연한 회색 */
+        /* [핵심 수정 1] PC(마우스 있는 환경)에서만 호버 효과 적용 */
+        @media (hover: hover) {
+            .option-btn:hover { 
+                transform: translateY(-3px); 
+                border-color: var(--hover-color);
+                color: var(--hover-color);
+                background-color: #f4f6f8;
+            }
+            .option-btn:hover .circle {
+                background: var(--hover-color);
+                border-color: var(--hover-color);
+            }
         }
 
-        .option-btn:hover .circle {
-            background: var(--hover-color); /* 원 채워짐 */
+        /* [핵심 수정 2] 모바일/PC 공통: 클릭하는 순간(Active)에만 색상 변경 */
+        .option-btn:active {
+            border-color: var(--hover-color);
+            color: var(--hover-color);
+            background-color: #e8ecef;
+            transform: scale(0.98); /* 눌리는 느낌 */
+        }
+        .option-btn:active .circle {
+            background: var(--hover-color);
             border-color: var(--hover-color);
         }
 
-        /* 모바일 대응 */
         @media (max-width: 600px) {
             .options { flex-direction: column; gap: 8px; }
             .option-btn { flex-direction: row; padding: 12px 20px; justify-content: space-between; }
         }
 
-        /* 결과 화면 */
         #result-screen { display: none; }
         .type-name { font-size: 2.5rem; font-weight: 800; margin-bottom: 20px; font-family: 'Merriweather', serif; }
         .link-btn { display: inline-block; padding: 15px 30px; background: var(--text-primary); color: white; text-decoration: none; border-radius: 50px; margin-top: 20px; }
@@ -116,7 +127,7 @@
 </div>
 
 <script>
-    // 질문 리스트 (밸런스 패치 버전 유지)
+    // 질문 리스트
     const questions = [
         { q: "매일 똑같은 루틴대로 생활하는 것이 마음 편하고 효율적이다.", type: "f" },
         { q: "갑작스러운 변화보다는, 예측 가능한 안정적인 삶을 선호한다.", type: "f" },
@@ -157,6 +168,11 @@
     }
 
     function nextQuestion(scoreValue) {
+        // [핵심 수정 3] 버튼 클릭 시 포커스 해제 (잔상 제거)
+        if(document.activeElement) {
+            document.activeElement.blur();
+        }
+
         let type = questions[currentQ].type;
         scores[type] += scoreValue;
 
@@ -173,37 +189,4 @@
         resultScreen.style.display = "block";
 
         let maxScore = -100;
-        let resultType = 'f'; 
-
-        for (let type in scores) {
-            if (scores[type] > maxScore) {
-                maxScore = scores[type];
-                resultType = type;
-            }
-        }
-
-        const resultData = {
-            's': { name: "🎯 저격수형 (Sniper)", desc: "고감도 센서와 초집중력을 가진 분석가입니다.", link: "sniper.html", color: "#0984e3" },
-            'h': { name: "🏹 사냥꾼형 (Hunter)", desc: "지루함을 거부하고 위기를 돌파하는 행동가입니다.", link: "hunter.html", color: "#d63031" },
-            'f': { name: "🌾 농부형 (Farmer)", desc: "꾸준함과 안정성을 중시하는 관리자입니다.", link: "farmer.html", color: "#00b894" },
-            'g': { name: "🎒 채집가형 (Gatherer)", desc: "다양한 아이디어를 연결하는 창의적 융합가입니다.", link: "gatherer.html", color: "#fdcb6e" }
-        };
-
-        const result = resultData[resultType];
-
-        const typeName = document.getElementById("result-type");
-        const typeDesc = document.getElementById("result-desc");
-        const typeLink = document.getElementById("result-link");
-
-        typeName.innerText = result.name;
-        typeName.style.color = result.color;
-        typeDesc.innerText = result.desc;
-        typeLink.href = result.link;
-        typeLink.style.backgroundColor = result.color;
-    }
-
-    loadQuestion();
-</script>
-
-</body>
-</html>
+        let resultType = 'f
