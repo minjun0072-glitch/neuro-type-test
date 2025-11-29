@@ -6,7 +6,7 @@
     <title>뇌 신경 다양성 저널</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -33,6 +33,11 @@
             overflow-x: hidden;
         }
 
+        /* [OS 통합 패치] 폰트 렌더링 통일 */
+        html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+        body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+
+        /* 타이포그래피 */
         h1, h2, h3, .serif-font { font-family: 'Merriweather', serif; }
 
         .container {
@@ -45,6 +50,7 @@
         .header-banner {
             position: relative;
             text-align: center;
+            /* padding은 아래 반응형 패치에서 자동 조절됨 */
             padding: 140px 20px;
             margin-bottom: 60px;
             background-image: url('https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1932&auto=format&fit=crop'); 
@@ -66,7 +72,6 @@
         }
 
         .journal-title {
-            font-size: 4rem;
             font-weight: 900;
             margin-bottom: 15px;
             letter-spacing: -1px;
@@ -74,7 +79,6 @@
         }
 
         .journal-subtitle {
-            font-size: 1.3rem;
             color: var(--text-secondary);
             font-style: italic;
             font-weight: 300;
@@ -83,7 +87,6 @@
         /* --- 2. 콘텐츠 섹션 --- */
         .narrative-section {
             background: var(--card-bg);
-            padding: 50px;
             border: 1px solid var(--border-color);
             box-shadow: 10px 10px 0px rgba(0,0,0,0.05);
             margin-bottom: 60px;
@@ -93,15 +96,13 @@
         .theory-section {
             margin-bottom: 60px;
             border-left: 4px solid var(--accent-color);
-            padding-left: 30px;
             animation: slideUp 1s ease-out 0.8s backwards;
         }
 
-        /* --- [NEW] 진단 테스트 버튼 섹션 (CTA) --- */
+        /* --- 진단 테스트 버튼 섹션 (CTA) --- */
         .cta-section {
             background: linear-gradient(135deg, #2c3e50, #34495e);
             color: white;
-            padding: 50px;
             border-radius: 15px;
             text-align: center;
             margin: 80px 0;
@@ -113,14 +114,13 @@
             display: inline-block;
             background: var(--accent-color);
             color: white;
-            padding: 15px 40px;
-            font-size: 1.2rem;
             font-weight: 700;
             text-decoration: none;
             border-radius: 50px;
             margin-top: 20px;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-family: 'Merriweather', serif; 
         }
 
         .cta-btn:hover {
@@ -130,7 +130,7 @@
         }
 
         /* --- 3. 카드 그리드 --- */
-        .grid-title { text-align: center; font-size: 2rem; margin-bottom: 40px; }
+        .grid-title { text-align: center; margin-bottom: 40px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
 
         .card {
@@ -153,18 +153,91 @@
         .sniper:hover::before { background: var(--sniper-color); }
         .gatherer:hover::before { background: var(--gatherer-color); }
 
-        .card-type { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-secondary); margin-bottom: 15px; display: block; }
-        .card-title { font-size: 1.8rem; margin-bottom: 15px; }
+        .card-type { 
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            color: var(--text-secondary); 
+            margin-bottom: 15px; 
+            display: block; 
+        }
+        
+        .card-title { 
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            margin-bottom: 15px; 
+        }
+        
         .card-desc { font-size: 0.95rem; color: #666; line-height: 1.6; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        @media (max-width: 768px) {
-            .header-banner { padding: 80px 20px; }
-            .journal-title { font-size: 2.5rem; }
-            .narrative-section, .cta-section { padding: 30px; }
+        /* =========================================
+           [만능 반응형 패치] 
+           기기 해상도에 따라 글자와 레이아웃이 물처럼 흐르게 만듭니다.
+           ========================================= */
+
+        :root {
+            /* 기본 폰트 사이즈를 화면 크기에 따라 미세조정 */
+            font-size: 16px;
         }
+
+        /* 모바일에서는 기본 척도를 약간 줄임 */
+        @media (max-width: 768px) {
+            :root {
+                font-size: 14px; 
+            }
+        }
+
+        /* 1. 폰트 크기 자동화 (clamp 적용) */
+        .journal-title, .type-title {
+            /* 최소 32px ~ 화면의 6% ~ 최대 64px 사이에서 자동 조절 */
+            font-size: clamp(2rem, 6vw, 4rem) !important;
+            line-height: 1.2;
+        }
+
+        .journal-subtitle, .type-desc {
+            font-size: clamp(1rem, 3vw, 1.3rem) !important;
+        }
+
+        h2, .grid-title, .box-title {
+            font-size: clamp(1.5rem, 4vw, 2rem) !important;
+        }
+
+        p, .content-text, .question-text {
+            /* 본문은 너무 작아지면 안 되므로 최소값을 1rem으로 방어 */
+            font-size: clamp(1rem, 2.5vw, 1.1rem) !important; 
+            word-break: keep-all; /* 단어 유지 */
+        }
+
+        /* 2. 레이아웃 자동화 (컨테이너) */
+        .container {
+            /* 화면이 작을 땐 90%, 클 땐 1000px 고정 */
+            width: 90% !important; 
+            max-width: 1000px !important;
+            padding: 20px 0 !important; /* 위아래 패딩만 주고 좌우는 width로 제어 */
+            margin: 0 auto;
+        }
+
+        /* 3. 여백 자동화 (패딩도 화면 비례) */
+        .header-banner {
+            /* 높이도 화면 비율(vh)이나 너비(vw)에 따라 조절 */
+            padding: clamp(80px, 15vh, 140px) 20px !important;
+        }
+
+        .narrative-section, .theory-section, .content-box, .cta-section {
+            padding: clamp(20px, 5vw, 50px) !important; /* 모바일엔 20px, PC엔 50px */
+        }
+
+        /* 4. 진단 테스트 버튼 등 요소 크기 */
+        .option-btn, .cta-btn {
+            padding: clamp(15px, 2vw, 20px) !important;
+            font-size: clamp(0.9rem, 2vw, 1.1rem) !important;
+        }
+
     </style>
 </head>
 <body>
@@ -180,8 +253,8 @@
 <div class="container">
     
     <section class="narrative-section">
-        <h2 class="serif-font" style="font-size: 2rem; margin-bottom: 20px; color: var(--text-primary);">잃어버린 야성을 찾아서: 농경 사회에 불시착한 사냥꾼들</h2>
-        <div style="font-size: 1.05rem; color: #444; line-height: 1.8;">
+        <h2 class="serif-font" style="margin-bottom: 20px; color: var(--text-primary);">잃어버린 야성을 찾아서: 농경 사회에 불시착한 사냥꾼들</h2>
+        <div style="color: #444;">
             <p style="margin-bottom: 15px;">
                 우리는 종종 스스로에게 묻습니다. <em>"남들은 쉽게 하는 반복적인 일이 왜 나에게는 고문처럼 느껴질까?", "왜 나는 평소에는 무기력하다가도, 위기 상황이나 흥미로운 주제 앞에서만 미친 듯이 몰입할까?"</em>
             </p>
@@ -198,8 +271,8 @@
     </section>
 
     <section class="theory-section">
-        <h3 class="serif-font" style="font-size: 1.5rem; margin-bottom: 20px; color: var(--text-primary);">📖 과학적 배경 (Scientific Foundation)</h3>
-        <div class="theory-content" style="font-size: 1rem; color: #555;">
+        <h3 class="serif-font" style="margin-bottom: 20px; color: var(--text-primary);">📖 과학적 배경 (Scientific Foundation)</h3>
+        <div class="theory-content" style="color: #555;">
             <ul style="padding-left: 20px; list-style-type: disc;">
                 <li style="margin-bottom: 15px;">
                     <strong>사냥꾼 대 농부 가설 (The Hunter vs. Farmer Hypothesis):</strong><br>
@@ -218,8 +291,8 @@
     </section>
 
     <section class="theory-section" style="border-left-color: #ff7675;">
-        <h3 class="serif-font" style="font-size: 1.5rem; margin-bottom: 20px; color: #c0392b;">⚠️ 시스템 불일치와 정신 건강 리스크</h3>
-        <div class="theory-content" style="font-size: 1rem; color: #555;">
+        <h3 class="serif-font" style="margin-bottom: 20px; color: #c0392b;">⚠️ 시스템 불일치와 정신 건강 리스크</h3>
+        <div class="theory-content" style="color: #555;">
             <p style="margin-bottom: 15px;">
                 정신 질환은 개인의 나약함이 아니라, <strong>'뇌의 특성(OS)'과 '주어진 환경'의 불일치(Mismatch)'</strong>에서 오는 시스템 오류입니다.
             </p>
@@ -241,8 +314,8 @@
     </section>
 
     <section class="cta-section">
-        <h2 class="serif-font" style="margin-bottom: 15px; font-size: 2rem;">아직 본인의 유형을 모르시나요?</h2>
-        <p style="margin-bottom: 30px; font-size: 1.1rem; color: #ecf0f1;">
+        <h2 class="serif-font" style="margin-bottom: 15px;">아직 본인의 유형을 모르시나요?</h2>
+        <p style="margin-bottom: 30px; color: #ecf0f1;">
             20문항의 자가 진단을 통해 당신의 뇌가 어떤 OS로 작동하는지 확인해보세요.
         </p>
         <a href="selftest.html" class="cta-btn">🧬 내 뇌 유형 진단하기</a>
@@ -253,30 +326,29 @@
     <div class="grid">
         <a href="sniper.html" class="card sniper">
             <span class="card-type">Type 01</span>
-            <h3 class="card-title">🎯 저격수 (The Sniper)</h3>
+            <h3 class="card-title">🎯 The Sniper(저격수)</h3>
             <p class="card-desc">"표적을 찾으면 초집중한다."<br>고감도 신경계로 패턴을 분석하고 근본 원리를 탐구하지만, 환경 소음과 반복 작업에 극도로 예민한 전문가 유형.</p>
         </a>
 
         <a href="hunter.html" class="card hunter">
             <span class="card-type">Type 02</span>
-            <h3 class="card-title">🏹 사냥꾼 (The Hunter)</h3>
+            <h3 class="card-title">🏹 The Hunter(사냥꾼)</h3>
             <p class="card-desc">"지루함은 죽음이다."<br>위기 상황에서 각성하며, 새로운 자극과 즉각적인 보상을 찾아 끊임없이 움직이고 도전하는 행동가 유형.</p>
         </a>
 
         <a href="farmer.html" class="card farmer">
             <span class="card-type">Type 03</span>
-            <h3 class="card-title">🌾 농부 (The Farmer)</h3>
+            <h3 class="card-title">🌾 The Farmer(농부)</h3>
             <p class="card-desc">"꾸준함이 답이다."<br>안정적인 도파민 수치를 바탕으로 루틴을 지키며, 장기적인 보상을 위해 인내할 줄 아는 관리자 유형.</p>
         </a>
 
         <a href="gatherer.html" class="card gatherer">
             <span class="card-type">Type 04</span>
-            <h3 class="card-title">🎒 채집가 (The Gatherer)</h3>
+            <h3 class="card-title">🎒 The Gatherer(채집가)</h3>
             <p class="card-desc">"모든 것은 연결되어 있다."<br>다양한 분야를 넘나들며 정보를 수집하고, 서로 다른 아이디어를 연결하여 새로운 가치를 만드는 창의적 융합가.</p>
         </a>
     </div>
 
 </div>
 </body>
-
 </html>
