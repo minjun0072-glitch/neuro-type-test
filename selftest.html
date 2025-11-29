@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>뇌 유형 정밀 진단</title>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -15,17 +15,40 @@
             --hover-color: #34495e; 
         }
 
-        body { font-family: 'Pretendard', sans-serif; background: var(--bg-color); color: var(--text-primary); margin: 0; padding: 0; height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; }
+        body {
+            font-family: 'Merriweather', serif;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0; padding: 0; height: 100vh;
+            display: flex; justify-content: center; align-items: center; text-align: center;
+            line-height: 1.6;
+        }
         
-        .container { max-width: 700px; width: 90%; padding: 40px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .container { max-width: 700px; width: 90%; padding: 40px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; }
         
-        .progress-container { width: 100%; height: 6px; background: #eee; margin-bottom: 40px; border-radius: 3px; overflow: hidden; }
+        /* [NEW] 뒤로 가기 버튼 스타일 */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            color: #999;
+            font-family: 'Merriweather', serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.2s;
+            display: none; /* 첫 화면에선 안 보임 */
+        }
+        .back-btn:hover { color: var(--text-primary); }
+
+        .progress-container { width: 100%; height: 6px; background: #eee; margin-bottom: 40px; border-radius: 3px; overflow: hidden; margin-top: 10px; }
         .progress-bar { height: 100%; background: var(--accent-color); width: 0%; transition: width 0.3s ease; }
 
         .question-box { margin-bottom: 40px; min-height: 80px; display: flex; align-items: center; justify-content: center; }
-        .question-text { font-size: 1.4rem; font-weight: 700; line-height: 1.5; word-break: keep-all; font-family: 'Merriweather', serif; }
+        .question-text { font-size: 1.4rem; font-weight: 700; line-height: 1.4; word-break: keep-all; }
 
-        /* 5점 척도 버튼 스타일 */
         .options { display: flex; gap: 10px; justify-content: space-between; margin-top: 30px; }
         
         .option-btn {
@@ -36,15 +59,16 @@
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.1s; 
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.95rem; 
+            font-weight: 400; 
             color: #777; 
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            -webkit-tap-highlight-color: transparent; 
+            gap: 10px;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Merriweather', serif; 
         }
 
         .circle { 
@@ -55,7 +79,6 @@
             background: white;
         }
 
-        /* PC에서만 호버 효과 적용 */
         @media (hover: hover) {
             .option-btn:hover { 
                 transform: translateY(-3px); 
@@ -69,7 +92,6 @@
             }
         }
 
-        /* 모바일/PC 공통 클릭 효과 */
         .option-btn:active {
             border-color: var(--hover-color);
             color: var(--hover-color);
@@ -83,18 +105,21 @@
 
         @media (max-width: 600px) {
             .options { flex-direction: column; gap: 8px; }
-            .option-btn { flex-direction: row; padding: 12px 20px; justify-content: space-between; }
+            .option-btn { flex-direction: row; padding: 15px 20px; justify-content: space-between; font-size: 1rem;}
         }
 
-        /* 결과 화면 */
         #result-screen { display: none; }
-        .type-name { font-size: 2.5rem; font-weight: 800; margin-bottom: 20px; font-family: 'Merriweather', serif; }
-        .link-btn { display: inline-block; padding: 15px 30px; background: var(--text-primary); color: white; text-decoration: none; border-radius: 50px; margin-top: 20px; }
+        .type-name { font-size: 2.5rem; font-weight: 900; margin-bottom: 20px; color: var(--accent-color); letter-spacing: -1px;}
+        .result-desc-text { font-size: 1.1rem; margin-bottom: 30px; color: #555;}
+        .link-btn { display: inline-block; padding: 15px 35px; background: var(--text-primary); color: white; text-decoration: none; border-radius: 50px; margin-top: 10px; font-weight: 700; transition: background 0.3s;}
+        .link-btn:hover { background: var(--accent-color); }
     </style>
 </head>
 <body>
 
 <div class="container" id="test-screen">
+    <button class="back-btn" id="back-btn" onclick="prevQuestion()">← 이전 질문</button>
+
     <div class="progress-container"><div class="progress-bar" id="progress"></div></div>
     
     <div class="question-box">
@@ -121,9 +146,9 @@
 </div>
 
 <div class="container" id="result-screen">
-    <p style="color:#666;">정밀 분석 결과, 당신은</p>
+    <p style="color:#888; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Analysis Result</p>
     <h1 class="type-name" id="result-type">TYPE</h1>
-    <p id="result-desc" style="line-height: 1.6; margin-bottom: 30px;"></p>
+    <p id="result-desc" class="result-desc-text"></p>
     <a href="" class="link-btn" id="result-link">상세 리포트 확인하기 →</a>
 </div>
 
@@ -157,31 +182,61 @@
 
     let currentQ = 0;
     let scores = { s: 0, h: 0, f: 0, g: 0 };
+    
+    // [NEW] 답변 기록 저장소 (뒤로가기용)
+    let historyStack = [];
 
     const qText = document.getElementById("q-text");
     const progressBar = document.getElementById("progress");
     const testScreen = document.getElementById("test-screen");
     const resultScreen = document.getElementById("result-screen");
+    const backBtn = document.getElementById("back-btn");
 
     function loadQuestion() {
         qText.innerText = questions[currentQ].q;
         progressBar.style.width = `${((currentQ) / questions.length) * 100}%`;
+        
+        // 첫 번째 질문이면 뒤로가기 버튼 숨김, 아니면 보임
+        if (currentQ > 0) {
+            backBtn.style.display = "block";
+        } else {
+            backBtn.style.display = "none";
+        }
     }
 
     function nextQuestion(scoreValue) {
-        // 모바일 포커스 해제
         if(document.activeElement) {
             document.activeElement.blur();
         }
 
         let type = questions[currentQ].type;
         scores[type] += scoreValue;
+        
+        // [NEW] 기록 저장
+        historyStack.push({ type: type, val: scoreValue });
 
         currentQ++;
         if (currentQ < questions.length) {
             loadQuestion();
         } else {
             showResult();
+        }
+    }
+
+    // [NEW] 뒤로가기 함수
+    function prevQuestion() {
+        if (currentQ > 0) {
+            // 1. 마지막 기록 꺼내기
+            let lastAction = historyStack.pop();
+            
+            // 2. 점수 되돌리기 (Rollback)
+            scores[lastAction.type] -= lastAction.val;
+            
+            // 3. 인덱스 감소
+            currentQ--;
+            
+            // 4. 화면 갱신
+            loadQuestion();
         }
     }
 
@@ -196,7 +251,6 @@
             }
         }
 
-        // 동점자 후보 리스트
         let candidates = [];
         for (let type in scores) {
             if (scores[type] === maxScore) {
@@ -217,10 +271,10 @@
         }
 
         const resultData = {
-            's': { name: "🎯 저격수형 (Sniper)", desc: "고감도 센서와 초집중력을 가진 분석가입니다.", link: "sniper.html", color: "#0984e3" },
-            'h': { name: "🏹 사냥꾼형 (Hunter)", desc: "지루함을 거부하고 위기를 돌파하는 행동가입니다.", link: "hunter.html", color: "#d63031" },
-            'f': { name: "🌾 농부형 (Farmer)", desc: "꾸준함과 안정성을 중시하는 관리자입니다.", link: "farmer.html", color: "#00b894" },
-            'g': { name: "🎒 채집가형 (Gatherer)", desc: "다양한 아이디어를 연결하는 창의적 융합가입니다.", link: "gatherer.html", color: "#fdcb6e" }
+            's': { name: "🎯 저격수형 (Sniper)", desc: "고감도 센서와 초집중력을 가진 분석가입니다. 환경에 예민하지만 본질을 꿰뚫습니다.", link: "sniper.html", color: "#0984e3" },
+            'h': { name: "🏹 사냥꾼형 (Hunter)", desc: "지루함을 거부하고 위기를 돌파하는 행동가입니다. 도파민을 연료로 삼아 움직입니다.", link: "hunter.html", color: "#d63031" },
+            'f': { name: "🌾 농부형 (Farmer)", desc: "꾸준함과 안정성을 중시하는 관리자입니다. 반복되는 일상에서 평온함을 찾습니다.", link: "farmer.html", color: "#00b894" },
+            'g': { name: "🎒 채집가형 (Gatherer)", desc: "다양한 아이디어를 연결하는 창의적 융합가입니다. 호기심이 많고 유연합니다.", link: "gatherer.html", color: "#fdcb6e" }
         };
 
         const result = resultData[resultType];
@@ -236,7 +290,6 @@
         typeLink.style.backgroundColor = result.color;
     }
 
-    // 초기 실행 (이게 없으면 로딩 중...에서 멈춤)
     loadQuestion();
 </script>
 
