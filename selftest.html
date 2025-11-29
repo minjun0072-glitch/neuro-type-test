@@ -4,46 +4,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>뇌 유형 자가 진단 테스트</title>
+    <title>뇌 유형 정밀 진단</title>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --bg-color: #f9f7f1;
-            --text-primary: #2c3e50;
-            --accent-color: #c0392b;
-            --card-bg: #ffffff;
-        }
-
+        /* (기존 스타일 유지) */
+        :root { --bg-color: #f9f7f1; --text-primary: #2c3e50; --accent-color: #c0392b; }
         body { font-family: 'Pretendard', sans-serif; background: var(--bg-color); color: var(--text-primary); margin: 0; padding: 0; height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; }
+        .container { max-width: 700px; width: 90%; padding: 40px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         
-        .container { max-width: 600px; width: 90%; padding: 40px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
-
-        /* 진행바 */
         .progress-container { width: 100%; height: 6px; background: #eee; margin-bottom: 40px; border-radius: 3px; overflow: hidden; }
         .progress-bar { height: 100%; background: var(--accent-color); width: 0%; transition: width 0.3s ease; }
 
-        /* 질문 텍스트 */
-        .question-box { margin-bottom: 50px; min-height: 100px; display: flex; align-items: center; justify-content: center; }
-        .question-text { font-size: 1.6rem; font-weight: 700; line-height: 1.4; word-break: keep-all; animation: fadeIn 0.5s; font-family: 'Merriweather', serif; }
+        .question-box { margin-bottom: 40px; min-height: 80px; display: flex; align-items: center; justify-content: center; }
+        .question-text { font-size: 1.4rem; font-weight: 700; line-height: 1.5; word-break: keep-all; font-family: 'Merriweather', serif; }
 
-        /* 버튼 */
-        .btn-group { display: flex; gap: 20px; justify-content: center; flex-direction: column; }
-        .btn { padding: 20px; font-size: 1.1rem; border: 2px solid #eee; background: white; border-radius: 12px; cursor: pointer; transition: all 0.2s; font-weight: 600; color: #555; }
-        .btn:hover { border-color: var(--accent-color); color: var(--accent-color); transform: translateY(-3px); background: #fff5f5; }
-        .btn.yes { border-color: var(--text-primary); color: var(--text-primary); }
-        .btn.no { border-color: #999; color: #999; }
+        /* [NEW] 5점 척도 버튼 스타일 */
+        .options { display: flex; gap: 10px; justify-content: space-between; margin-top: 30px; }
+        
+        .option-btn {
+            width: 100%;
+            padding: 15px 5px;
+            border: 2px solid #eee;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #777;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
 
-        /* 결과 화면 (처음엔 숨김) */
+        /* 호버 및 선택 효과 */
+        .option-btn:hover { transform: translateY(-3px); border-color: #ccc; }
+        
+        /* 버튼별 색상 (직관적 UX) */
+        .opt-1:hover { border-color: #d63031; color: #d63031; background: #fff0f0; } /* 매우 아니다 */
+        .opt-2:hover { border-color: #ff7675; color: #ff7675; background: #fffbfb; } /* 아니다 */
+        .opt-3:hover { border-color: #b2bec3; color: #636e72; background: #f9f9f9; } /* 보통 */
+        .opt-4:hover { border-color: #74b9ff; color: #0984e3; background: #f0f8ff; } /* 그렇다 */
+        .opt-5:hover { border-color: #0984e3; color: #0984e3; background: #eaf4ff; } /* 매우 그렇다 */
+
+        /* 큰 동그라미 아이콘 */
+        .circle { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #ddd; transition: 0.2s; }
+        .opt-1:hover .circle { background: #d63031; border-color: #d63031; }
+        .opt-5:hover .circle { background: #0984e3; border-color: #0984e3; }
+
+        /* 모바일 대응 */
+        @media (max-width: 600px) {
+            .options { flex-direction: column; gap: 8px; }
+            .option-btn { flex-direction: row; padding: 12px 20px; justify-content: space-between; }
+        }
+
+        /* 결과 화면 */
         #result-screen { display: none; }
-        .result-title { font-size: 1.2rem; color: #666; margin-bottom: 10px; }
-        .type-name { font-size: 3rem; font-weight: 800; margin-bottom: 20px; color: var(--accent-color); font-family: 'Merriweather', serif; }
-        .type-desc { margin-bottom: 40px; font-size: 1.1rem; line-height: 1.6; }
-        .link-btn { display: inline-block; padding: 15px 30px; background: var(--text-primary); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; transition: background 0.3s; }
-        .link-btn:hover { background: var(--accent-color); }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .type-name { font-size: 2.5rem; font-weight: 800; margin-bottom: 20px; font-family: 'Merriweather', serif; }
+        .link-btn { display: inline-block; padding: 15px 30px; background: var(--text-primary); color: white; text-decoration: none; border-radius: 50px; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -55,45 +76,53 @@
         <div class="question-text" id="q-text">로딩 중...</div>
     </div>
 
-    <div class="btn-group">
-        <button class="btn yes" onclick="nextQuestion(1)">그렇다 (Yes)</button>
-        <button class="btn no" onclick="nextQuestion(0)">아니다 (No)</button>
+    <div class="options">
+        <button class="option-btn opt-1" onclick="nextQuestion(-2)">
+            <div class="circle"></div> <span>전혀 아니다</span>
+        </button>
+        <button class="option-btn opt-2" onclick="nextQuestion(-1)">
+            <div class="circle"></div> <span>아니다</span>
+        </button>
+        <button class="option-btn opt-3" onclick="nextQuestion(0)">
+            <div class="circle"></div> <span>보통이다</span>
+        </button>
+        <button class="option-btn opt-4" onclick="nextQuestion(1)">
+            <div class="circle"></div> <span>그렇다</span>
+        </button>
+        <button class="option-btn opt-5" onclick="nextQuestion(2)">
+            <div class="circle"></div> <span>매우 그렇다</span>
+        </button>
     </div>
 </div>
 
 <div class="container" id="result-screen">
-    <p class="result-title">분석 결과, 당신의 뇌 유형은</p>
-    <h1 class="type-name" id="result-type">TYPE NAME</h1>
-    <p class="type-desc" id="result-desc">설명이 들어갑니다.</p>
-    <a href="" class="link-btn" id="result-link">상세 분석 보고서 보기 →</a>
+    <p style="color:#666;">정밀 분석 결과, 당신은</p>
+    <h1 class="type-name" id="result-type">TYPE</h1>
+    <p id="result-desc" style="line-height: 1.6; margin-bottom: 30px;"></p>
+    <a href="" class="link-btn" id="result-link">상세 리포트 확인하기 →</a>
 </div>
 
 <script>
-    // 20문항 데이터베이스
-// [수정됨] 밸런스 패치 완료: 각 유형별 5문항씩 (총 20문항)
+    // 질문 리스트 (밸런스 패치 버전)
     const questions = [
-        // 1. 농부형 (Farmer) 문항 : 안정, 루틴, 규정
         { q: "매일 똑같은 루틴대로 생활하는 것이 마음 편하고 효율적이다.", type: "f" },
         { q: "갑작스러운 변화보다는, 예측 가능한 안정적인 삶을 선호한다.", type: "f" },
         { q: "정해진 매뉴얼이나 규칙을 따를 때 가장 일 처리가 잘 된다.", type: "f" },
         { q: "한번 시작한 일은 지루해도 끈기 있게 끝까지 마무리한다.", type: "f" },
         { q: "튀는 아이디어보다는 검증된 방식과 조화를 중요시한다.", type: "f" },
 
-        // 2. 사냥꾼형 (Hunter) 문항 : 자극, 행동, 위기
         { q: "가만히 앉아있는 것보다 몸을 움직이거나 현장을 뛰는 게 좋다.", type: "h" },
         { q: "위험을 감수하더라도 새로운 것에 도전하는 것이 짜릿하다.", type: "h" },
         { q: "결과가 바로바로 나오는 일(게임, 운동, 영업)을 선호한다.", type: "h" },
         { q: "지루한 회의나 긴 서류 작업은 나에게 고문과도 같다.", type: "h" },
         { q: "위기 상황이나 마감 직전에 초인적인 집중력이 발휘된다.", type: "h" },
 
-        // 3. 저격수형 (Sniper) 문항 : 탐구, 예민, 본질
         { q: "남들이 지나치는 미세한 소음이나 환경 변화에 예민하다.", type: "s" },
         { q: "문제가 생기면 '어떻게'보다 '왜(Why)' 발생했는지 원리부터 파고든다.", type: "s" },
         { q: "흥미 없는 공부는 머리에 안 들어오지만, 꽂힌 주제는 밤새 파고든다.", type: "s" },
         { q: "커피(카페인)를 마시면 각성되기보다 오히려 차분해지거나 편안하다.", type: "s" },
         { q: "여러 사람과 섞이기보다 혼자 조용히 완벽하게 처리하는 게 편하다.", type: "s" },
 
-        // 4. 채집가형 (Gatherer) 문항 : 연결, 확산, 융합
         { q: "한 가지를 깊게 파기보다, 다양한 분야에 넓은 관심을 가진다.", type: "g" },
         { q: "서로 관련 없어 보이는 아이디어들을 연결하는 것을 좋아한다.", type: "g" },
         { q: "이것저것 벌려놓은 일은 많은데, 마무리가 잘 안 될 때가 많다.", type: "g" },
@@ -114,11 +143,14 @@
         progressBar.style.width = `${((currentQ) / questions.length) * 100}%`;
     }
 
-    function nextQuestion(isYes) {
-        if (isYes) {
-            let typeChars = questions[currentQ].type.split('');
-            typeChars.forEach(char => { scores[char]++; });
-        }
+    // [핵심 변경] 점수 계산 로직 (가중치 적용)
+    // scoreValue: -2(매우 아님) ~ +2(매우 그렇다)
+    function nextQuestion(scoreValue) {
+        let type = questions[currentQ].type;
+        
+        // 해당 유형에 점수 더하기 (마이너스면 점수가 깎임)
+        scores[type] += scoreValue;
+
         currentQ++;
         if (currentQ < questions.length) {
             loadQuestion();
@@ -131,10 +163,10 @@
         testScreen.style.display = "none";
         resultScreen.style.display = "block";
 
-        let maxScore = -1;
+        // -100점(초기값)부터 시작해서 가장 높은 점수 찾기
+        let maxScore = -100;
         let resultType = 'f'; 
 
-        // 동점 처리 및 최댓값 찾기
         for (let type in scores) {
             if (scores[type] > maxScore) {
                 maxScore = scores[type];
@@ -143,10 +175,10 @@
         }
 
         const resultData = {
-            's': { name: "🎯 저격수형 (Sniper)", desc: "고감도 센서와 초집중력을 가진 분석가입니다. 환경에 예민하지만 본질을 꿰뚫습니다.", link: "sniper.html", color: "#0984e3" },
-            'h': { name: "🏹 사냥꾼형 (Hunter)", desc: "지루함을 거부하고 위기를 돌파하는 행동가입니다. 도파민을 연료로 삼아 움직입니다.", link: "hunter.html", color: "#d63031" },
-            'f': { name: "🌾 농부형 (Farmer)", desc: "꾸준함과 안정성을 중시하는 관리자입니다. 반복되는 일상에서 평온함을 찾습니다.", link: "farmer.html", color: "#00b894" },
-            'g': { name: "🎒 채집가형 (Gatherer)", desc: "다양한 아이디어를 연결하는 창의적 융합가입니다. 호기심이 많고 유연합니다.", link: "gatherer.html", color: "#fdcb6e" }
+            's': { name: "🎯 저격수형 (Sniper)", desc: "고감도 센서와 초집중력을 가진 분석가입니다.", link: "sniper.html", color: "#0984e3" },
+            'h': { name: "🏹 사냥꾼형 (Hunter)", desc: "지루함을 거부하고 위기를 돌파하는 행동가입니다.", link: "hunter.html", color: "#d63031" },
+            'f': { name: "🌾 농부형 (Farmer)", desc: "꾸준함과 안정성을 중시하는 관리자입니다.", link: "farmer.html", color: "#00b894" },
+            'g': { name: "🎒 채집가형 (Gatherer)", desc: "다양한 아이디어를 연결하는 창의적 융합가입니다.", link: "gatherer.html", color: "#fdcb6e" }
         };
 
         const result = resultData[resultType];
@@ -166,5 +198,4 @@
 </script>
 
 </body>
-
 </html>
