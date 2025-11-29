@@ -3,26 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>농부형 상세 분석</title>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>The Farmer Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* (스타일 동일, 색상만 변경) */
-        :root { --bg-color: #f9f7f1; --text-primary: #2c3e50; --card-bg: #ffffff; --type-color: #00b894; } /* 그린 */
+        :root {
+            --bg-color: #f9f7f1;
+            --text-primary: #2c3e50;
+            --card-bg: #ffffff;
+            --type-color: #00b894; /* Green */
+        }
+        
         body { font-family: 'Pretendard', sans-serif; background: var(--bg-color); color: var(--text-primary); margin: 0; padding: 40px 20px; line-height: 1.7;}
         .container { max-width: 800px; margin: 0 auto; }
-        .nav-back { display: inline-block; margin-bottom: 40px; text-decoration: none; color: #888; font-weight: 600; transition: color 0.3s; }
+        
+        h1, h2, .type-tag, .box-title, .nav-back { font-family: 'Merriweather', serif; }
+
+        .nav-back { display: inline-block; margin-bottom: 40px; text-decoration: none; color: #888; font-weight: 600; transition: color 0.3s; font-size: 0.9rem; }
         .nav-back:hover { color: var(--text-primary); }
+
         .type-header { border-bottom: 4px solid var(--type-color); padding-bottom: 30px; margin-bottom: 50px; animation: slideDown 0.8s ease-out; }
-        .type-tag { font-family: 'Merriweather', serif; font-size: 0.9rem; color: var(--type-color); letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
-        .type-title { font-size: 3.2rem; margin: 15px 0; font-family: 'Merriweather', serif; color: var(--text-primary); }
-        .type-desc { font-size: 1.3rem; color: #555; font-style: italic; }
+        .type-tag { font-size: 0.9rem; color: var(--type-color); letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
+        .type-title { font-size: 3.5rem; margin: 10px 0; color: var(--text-primary); font-weight: 900; }
+        .type-desc { font-size: 1.2rem; color: #555; font-style: italic; font-family: 'Pretendard', sans-serif; }
+
         .content-box { background: var(--card-bg); padding: 40px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); margin-bottom: 30px; animation: fadeIn 1s ease-out 0.3s backwards; border: 1px solid #eee; }
-        .box-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 25px; color: var(--type-color); border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; }
+        .box-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 25px; color: var(--type-color); border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; }
         .content-text { font-size: 1.05rem; color: #444; }
+        
         ul { padding-left: 0; list-style: none; }
         li { margin-bottom: 15px; padding-left: 20px; position: relative; }
         li::before { content: "•"; color: var(--type-color); font-weight: bold; position: absolute; left: 0; top: 0;}
         strong { color: #222; font-weight: 700; }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -33,23 +45,23 @@
 
     <header class="type-header">
         <span class="type-tag">TYPE 03 : MANAGER</span>
-        <h1 class="type-title">The Farmer (농부)</h1>
+        <h1 class="type-title">The Farmer(농부)</h1>
         <p class="type-desc">꾸준함과 안정성을 바탕으로 문명을 유지하는 관리자</p>
     </header>
 
     <section class="content-box">
-        <h2 class="box-title">🧠 신경 메커니즘 (Neuro-Mechanism)</h2>
+        <h2 class="box-title">Neuro-Mechanism (신경 메커니즘)</h2>
         <div class="content-text">
             <ul>
-                <li><strong>높은 기저 도파민:</strong> 사냥꾼과 달리 가만히 있어도 뇌가 충분한 만족감을 느낍니다. 따라서 특별한 자극 없이도 일상생활을 평온하게 영위할 수 있습니다.</li>
-                <li><strong>세로토닌 우세:</strong> 행복 호르몬인 세로토닌 시스템이 안정적입니다. 이는 충동을 억제하고, 현재의 불편함(씨 뿌리기)을 견디며 미래의 보상(수확)을 기다리는 인내심의 원천입니다.</li>
-                <li><strong>선형적 사고 (Linear Processing):</strong> A 다음에 B, B 다음에 C로 이어지는 순차적이고 논리적인 정보 처리를 선호합니다.</li>
+                <li><strong>높은 기저 도파민 (High Tonic):</strong> 사냥꾼과 달리 가만히 있어도 뇌가 충분한 만족감을 느낍니다. 따라서 특별한 자극 없이도 반복적인 일상생활을 평온하게 영위할 수 있습니다.</li>
+                <li><strong>세로토닌 우세 (Serotonin):</strong> 행복 호르몬인 세로토닌 시스템이 안정적입니다. 이는 충동을 억제하고, 현재의 불편함(씨 뿌리기)을 견디며 미래의 지연된 보상(수확)을 기다리는 인내심의 원천입니다.</li>
+                <li><strong>선형적 사고 (Linear Processing):</strong> A 다음에 B, B 다음에 C로 이어지는 순차적이고 논리적인 정보 처리를 선호하며, 체계적인 학습에 강합니다.</li>
             </ul>
         </div>
     </section>
 
     <section class="content-box">
-        <h2 class="box-title">👤 성격 및 행동 (Behavioral Profile)</h2>
+        <h2 class="box-title">Behavioral Profile (성격 및 행동)</h2>
         <div class="content-text">
             <ul>
                 <li><strong>꾸준함의 미학:</strong> 매일 똑같은 루틴을 반복하는 것에서 지루함보다는 '편안함'과 '안정감'을 느낍니다. 티끌 모아 태산을 만드는 타입입니다.</li>
@@ -61,22 +73,23 @@
     </section>
 
     <section class="content-box">
-        <h2 class="box-title">⚡ 자율신경계 (ANS Profile): 균형형</h2>
+        <h2 class="box-title">ANS Profile (자율신경계)</h2>
         <div class="content-text">
+            <p style="margin-bottom: 15px;">교감신경과 부교감신경이 적절한 <strong>'균형(Balanced)'</strong>을 이룹니다.</p>
             <ul>
-                <li><strong>밸런스 유지:</strong> 교감신경과 부교감신경이 적절한 균형을 이룹니다. 일상적인 스트레스를 가장 효율적으로 관리하며, 에너지 소모가 적습니다.</li>
-                <li><strong>급변 상황 취약:</strong> 예측 가능한 범위 내에서는 강하지만, 예상치 못한 위기가 닥치면 사냥꾼/저격수보다 대응 속도가 느리거나 당황할 수 있습니다.</li>
+                <li><strong>에너지 효율성:</strong> 불필요한 과각성 상태를 피하고 에너지를 비축하는 능력이 뛰어납니다.</li>
+                <li><strong>스트레스 관리:</strong> 일상적이고 예측 가능한 스트레스는 가장 잘 관리하지만, 급변하는 상황이나 돌발 위기에는 사냥꾼보다 대응 속도가 느릴 수 있습니다.</li>
             </ul>
         </div>
     </section>
 
     <section class="content-box">
-        <h2 class="box-title">💼 최적의 환경과 생존 전략</h2>
+        <h2 class="box-title">Optimum Environment (최적의 환경)</h2>
         <div class="content-text">
             <ul>
                 <li><strong>안정성:</strong> 고용이 보장되고, 업무 매뉴얼이 명확하며, 미래를 예측할 수 있는 환경이 최적입니다.</li>
                 <li><strong>장기 프로젝트:</strong> 단기 성과보다는 긴 호흡으로 꼼꼼하게 완성도를 높여가는 업무에서 빛을 발합니다.</li>
-                <li><strong>추천 직무:</strong> 행정 공무원, 재무/회계/인사, 대기업 관리직, 교사, 품질 관리.</li>
+                <li><strong>추천 직무:</strong> 행정 공무원, 재무/회계/인사, 대기업 관리직, 교사, 품질 관리, 의료 기술직.</li>
             </ul>
         </div>
     </section>
