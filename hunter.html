@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사냥꾼형 상세 분석</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* (스타일은 sniper.html과 동일, 색상만 변경) */
+        :root { --bg-color: #f9f7f1; --text-primary: #2c3e50; --card-bg: #ffffff; --type-color: #d63031; } /* 레드 */
+        body { font-family: 'Pretendard', sans-serif; background: var(--bg-color); color: var(--text-primary); margin: 0; padding: 40px 20px; line-height: 1.7;}
+        .container { max-width: 800px; margin: 0 auto; }
+        .nav-back { display: inline-block; margin-bottom: 40px; text-decoration: none; color: #888; font-weight: 600; transition: color 0.3s; }
+        .nav-back:hover { color: var(--text-primary); }
+        .type-header { border-bottom: 4px solid var(--type-color); padding-bottom: 30px; margin-bottom: 50px; animation: slideDown 0.8s ease-out; }
+        .type-tag { font-family: 'Merriweather', serif; font-size: 0.9rem; color: var(--type-color); letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
+        .type-title { font-size: 3.2rem; margin: 15px 0; font-family: 'Merriweather', serif; color: var(--text-primary); }
+        .type-desc { font-size: 1.3rem; color: #555; font-style: italic; }
+        .content-box { background: var(--card-bg); padding: 40px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); margin-bottom: 30px; animation: fadeIn 1s ease-out 0.3s backwards; border: 1px solid #eee; }
+        .box-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 25px; color: var(--type-color); border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; }
+        .content-text { font-size: 1.05rem; color: #444; }
+        ul { padding-left: 0; list-style: none; }
+        li { margin-bottom: 15px; padding-left: 20px; position: relative; }
+        li::before { content: "•"; color: var(--type-color); font-weight: bold; position: absolute; left: 0; top: 0;}
+        strong { color: #222; font-weight: 700; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="nav-back">← Back to Journal</a>
+
+    <header class="type-header">
+        <span class="type-tag">TYPE 02 : DOER</span>
+        <h1 class="type-title">The Hunter (사냥꾼)</h1>
+        <p class="type-desc">본능적인 감각과 행동력으로 위기를 돌파하는 개척자</p>
+    </header>
+
+    <section class="content-box">
+        <h2 class="box-title">🧠 신경 메커니즘 (Neuro-Mechanism)</h2>
+        <div class="content-text">
+            <ul>
+                <li><strong>도파민 갈망 (Craving):</strong> 전형적인 ADHD 성향의 뇌 구조와 유사합니다. 기저 도파민이 낮아 끊임없이 새롭고 강렬한 자극(High Stimulation)을 찾아 움직여야 뇌가 정상 작동합니다.</li>
+                <li><strong>충동성 (Impulsivity):</strong> 전두엽의 '브레이크'보다 기저핵의 '액셀'이 더 강하게 작동하여, 생각보다 행동이 앞섭니다. 이는 위기 상황에서 주저하지 않는 실행력이 됩니다.</li>
+                <li><strong>테스토스테론의 영향:</strong> 남성 호르몬의 영향을 강하게 받아, 위험을 감수(Risk-taking)하고 경쟁에서 승리했을 때 가장 큰 보상감을 느낍니다.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="content-box">
+        <h2 class="box-title">👤 성격 및 행동 (Behavioral Profile)</h2>
+        <div class="content-text">
+            <ul>
+                <li><strong>타고난 승부사:</strong> 위험(Risk)을 두려워하기보다 즐깁니다. 불확실한 상황에서 남들이 주저할 때 가장 먼저 뛰어드는 결단력이 있습니다.</li>
+                <li><strong>지루함 불내성:</strong> 긴 회의, 반복적인 서류 작업, 느린 피드백을 '고문'처럼 느낍니다. 항상 "다음은 뭐지?"를 찾으며 안절부절못하는 경향이 있습니다.</li>
+                <li><strong>카리스마와 충동성:</strong> 에너지가 넘치고 좌중을 휘어잡는 매력이 있지만, 기분파적인 기질로 인해 계획을 수시로 바꾸거나 마무리가 부족할 수 있습니다.</li>
+                <li><strong>위기 중독:</strong> 평화로운 일상보다 마감 직전이나 비상 상황에서 오히려 정신이 맑아지고 능력이 200% 발휘됩니다.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="content-box">
+        <h2 class="box-title">⚡ 자율신경계 (ANS Profile): 가속형</h2>
+        <div class="content-text">
+            <ul>
+                <li><strong>교감신경 우세:</strong> 항상 '전투 준비 태세'입니다. 심장이 빠르고 근육이 긴장되어 있어 즉각적인 신체 반응이 가능합니다.</li>
+                <li><strong>단기전 특화:</strong> 짧고 굵게 에너지를 쏟아붓는 것에는 능하지만, 긴 호흡으로 에너지를 분배하는 지구력은 약할 수 있습니다.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="content-box">
+        <h2 class="box-title">💼 최적의 환경과 생존 전략</h2>
+        <div class="content-text">
+            <ul>
+                <li><strong>예측 불가능성:</strong> 매일 똑같은 일상이 아닌, 매일 새로운 사건이 터지는 환경이 사냥터입니다. (응급실, 사건 기자, 영업 현장)</li>
+                <li><strong>게임화 (Gamification):</strong> 장기 목표를 잘게 쪼개어, '오늘의 퀘스트'를 깨면 즉시 보상이 주어지는 구조를 만들어야 합니다.</li>
+                <li><strong>추천 직무:</strong> 영업/세일즈, 응급 구조/소방, 스타트업 창업, 외과 의사, 스포츠 선수.</li>
+            </ul>
+        </div>
+    </section>
+</div>
+</body>
+</html>

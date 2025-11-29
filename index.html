@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뇌 신경 다양성 저널</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #f9f7f1;
+            --text-primary: #2c3e50;
+            --text-secondary: #5d606b;
+            --accent-color: #c0392b;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            
+            --hunter-color: #d63031;
+            --farmer-color: #00b894;
+            --sniper-color: #0984e3;
+            --gatherer-color: #fdcb6e;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif-font { font-family: 'Merriweather', serif; }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 80px 20px;
+        }
+
+        /* --- 1. 헤더 배너 --- */
+        .header-banner {
+            position: relative;
+            text-align: center;
+            padding: 140px 20px;
+            margin-bottom: 60px;
+            background-image: url('https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1932&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            border-bottom: 5px solid var(--accent-color);
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(249, 247, 241, 0.85);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .journal-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+
+        .journal-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        /* --- 2. 콘텐츠 섹션 --- */
+        .narrative-section {
+            background: var(--card-bg);
+            padding: 50px;
+            border: 1px solid var(--border-color);
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.05);
+            margin-bottom: 60px;
+            animation: slideUp 1s ease-out 0.5s backwards;
+        }
+
+        .theory-section {
+            margin-bottom: 60px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 30px;
+            animation: slideUp 1s ease-out 0.8s backwards;
+        }
+
+        /* --- [NEW] 진단 테스트 버튼 섹션 (CTA) --- */
+        .cta-section {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 80px 0;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            animation: slideUp 1s ease-out 1.0s backwards;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            background: #e74c3c;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        /* --- 3. 카드 그리드 --- */
+        .grid-title { text-align: center; font-size: 2rem; margin-bottom: 40px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            display: block;
+        }
+
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--text-secondary); }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--text-secondary); transition: background 0.3s; }
+        .hunter:hover::before { background: var(--hunter-color); }
+        .farmer:hover::before { background: var(--farmer-color); }
+        .sniper:hover::before { background: var(--sniper-color); }
+        .gatherer:hover::before { background: var(--gatherer-color); }
+
+        .card-type { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-secondary); margin-bottom: 15px; display: block; }
+        .card-title { font-size: 1.8rem; margin-bottom: 15px; }
+        .card-desc { font-size: 0.95rem; color: #666; line-height: 1.6; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .header-banner { padding: 80px 20px; }
+            .journal-title { font-size: 2.5rem; }
+            .narrative-section, .cta-section { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-banner">
+    <div class="header-overlay"></div>
+    <div class="header-content">
+        <h1 class="journal-title serif-font">NEURO DIVERSITY</h1>
+        <p class="journal-subtitle serif-font">당신의 뇌는 고장 난 것이 아니라, 다른 시대를 위해 설계되었습니다.</p>
+    </div>
+</div>
+
+<div class="container">
+    
+    <section class="narrative-section">
+        <h2 class="serif-font" style="font-size: 2rem; margin-bottom: 20px; color: var(--text-primary);">잃어버린 야성을 찾아서: 농경 사회에 불시착한 사냥꾼들</h2>
+        <div style="font-size: 1.05rem; color: #444; line-height: 1.8;">
+            <p style="margin-bottom: 15px;">
+                우리는 종종 스스로에게 묻습니다. <em>"남들은 쉽게 하는 반복적인 일이 왜 나에게는 고문처럼 느껴질까?", "왜 나는 평소에는 무기력하다가도, 위기 상황이나 흥미로운 주제 앞에서만 미친 듯이 몰입할까?"</em>
+            </p>
+            <p style="margin-bottom: 15px;">
+                오랫동안 세상은 이것을 '성격 차이'라고 불렀고, 때로는 '장애'나 '결핍'이라고 진단했습니다. 하지만 현대 뇌과학과 진화심리학은 전혀 다른 이야기를 들려줍니다. 이것은 결핍의 문제가 아니라, <strong>'생존 전략(OS)'의 차이</strong>라는 것입니다.
+            </p>
+            <p style="margin-bottom: 15px;">
+                인류 역사의 99% 동안 우리는 숲을 누비는 사냥꾼이었습니다. 하지만 불과 최근 1%의 시간 동안 세상은 농경과 산업 사회로 급변했습니다. 꾸준함, 반복, 안정을 미덕으로 여기는 '농부의 세상'이 도래한 것입니다. 이 변화 속에서, 여전히 <strong>'야생의 본능(사냥꾼의 뇌)'</strong>을 간직한 사람들은 혼란에 빠졌습니다.
+            </p>
+            <p>
+                그들의 뇌는 고장 난 게 아닙니다. 단지 <strong>'잘못된 시대, 잘못된 장소'</strong>에 서 있을 뿐입니다. 이제 우리는 도파민과 자율신경계라는 열쇠를 통해, 당신의 진짜 모습을 재발견하려 합니다.
+            </p>
+        </div>
+    </section>
+
+    <section class="theory-section">
+        <h3 class="serif-font" style="font-size: 1.5rem; margin-bottom: 20px; color: var(--text-primary);">📖 과학적 배경 (Scientific Foundation)</h3>
+        <div class="theory-content" style="font-size: 1rem; color: #555;">
+            <ul style="padding-left: 20px; list-style-type: disc;">
+                <li style="margin-bottom: 15px;">
+                    <strong>사냥꾼 대 농부 가설 (The Hunter vs. Farmer Hypothesis):</strong><br>
+                    톰 하트만(Thom Hartmann)이 제안한 이 이론은 ADHD 성향이 진화적 관점에서 <strong>'생존에 유리했던 사냥꾼의 특성'</strong>이라고 설명합니다. 특히 <strong>DRD4-7R(방랑자 유전자)</strong>은 새로운 것을 탐험하고 변화를 감지하는 데 특화된 유전적 형질로, 현대의 '주의산만함'은 과거의 <strong>'초경계성(Hyper-vigilance)'</strong>이었습니다.
+                </li>
+                <li style="margin-bottom: 15px;">
+                    <strong>도파민의 두 얼굴 (Tonic vs. Phasic):</strong><br>
+                    뇌의 기본 만족감을 담당하는 <strong>'기저성(Tonic) 도파민'</strong>이 낮은 유형(사냥꾼/저격수)은 가만히 있을 때 고통스러운 지루함을 느낍니다. 이들은 생존을 위해 특정 자극에 폭발적으로 반응하는 <strong>'위상성(Phasic) 도파민'</strong>을 추구하며, 이것이 '초집중'과 '도전'의 원동력이 됩니다.
+                </li>
+                <li>
+                    <strong>고출력 자율신경계 (High-Output ANS):</strong><br>
+                    스티븐 포지스의 다미주 신경 이론과 연결해 볼 때, 특정 유형은 남들보다 훨씬 강력한 <strong>교감신경(가속)</strong>과 <strong>부교감신경(브레이크)</strong>을 동시에 가집니다. 이는 위기 상황에서 압도적인 대처 능력을 보여주지만, 평소에는 미세한 소음이나 전기 자극에도 반응하는 <strong>'감각 과민성'</strong>을 유발합니다.
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="theory-section" style="border-left-color: #ff7675;">
+        <h3 class="serif-font" style="font-size: 1.5rem; margin-bottom: 20px; color: #c0392b;">⚠️ 시스템 불일치와 정신 건강 리스크</h3>
+        <div class="theory-content" style="font-size: 1rem; color: #555;">
+            <p style="margin-bottom: 15px;">
+                정신 질환은 개인의 나약함이 아니라, <strong>'뇌의 특성(OS)'과 '주어진 환경'의 불일치(Mismatch)'</strong>에서 오는 시스템 오류입니다.
+            </p>
+            <ul style="padding-left: 20px;">
+                <li style="margin-bottom: 10px;">
+                    <strong>📉 우울증 & 번아웃 (Depression):</strong><br>
+                    사냥꾼이나 저격수 유형이 강제로 '농부의 삶(반복, 저자극)'을 지속할 때 발생합니다. 이는 슬픔이라기보다, 보상회로가 차단되어 발생하는 <strong>'뇌의 연료 고갈 및 셧다운(Shutdown)'</strong> 상태입니다.
+                </li>
+                <li style="margin-bottom: 10px;">
+                    <strong>💥 불안장애 (Anxiety):</strong><br>
+                    고감도 센서를 가진 뇌가 통제되지 않는 소음이나 자극에 지속적으로 노출될 때 발생합니다. 전두엽(이성)이 과열된 편도체(경보)를 끄지 못하는 <strong>'시스템 과부하'</strong> 상태입니다.
+                </li>
+                <li>
+                    <strong>💊 중독 (Addiction):</strong><br>
+                    낮은 기저 도파민을 가진 뇌가 생존을 위해 <strong>'강제 주유'</strong>를 시도하는 과정입니다. 게임, 도박 등의 고자극은 결핍된 뇌에게 가장 빠르고 확실한 연료 공급원이기 때문입니다.
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2 class="serif-font" style="margin-bottom: 15px; font-size: 2rem;">아직 본인의 유형을 모르시나요?</h2>
+        <p style="margin-bottom: 30px; font-size: 1.1rem; color: #ecf0f1;">
+            20문항의 자가 진단을 통해 당신의 뇌가 어떤 OS로 작동하는지 확인해보세요.
+        </p>
+        <a href="test.html" class="cta-btn">🧬 내 뇌 유형 진단하기</a>
+    </section>
+
+    <h2 class="grid-title serif-font">The Four Neuro-Types</h2>
+    
+    <div class="grid">
+        <a href="sniper.html" class="card sniper">
+            <span class="card-type">Type 01</span>
+            <h3 class="card-title">🎯 저격수 (The Sniper)</h3>
+            <p class="card-desc">"표적을 찾으면 초집중한다."<br>고감도 신경계로 패턴을 분석하고 근본 원리를 탐구하지만, 환경 소음과 반복 작업에 극도로 예민한 전문가 유형.</p>
+        </a>
+
+        <a href="hunter.html" class="card hunter">
+            <span class="card-type">Type 02</span>
+            <h3 class="card-title">🏹 사냥꾼 (The Hunter)</h3>
+            <p class="card-desc">"지루함은 죽음이다."<br>위기 상황에서 각성하며, 새로운 자극과 즉각적인 보상을 찾아 끊임없이 움직이고 도전하는 행동가 유형.</p>
+        </a>
+
+        <a href="farmer.html" class="card farmer">
+            <span class="card-type">Type 03</span>
+            <h3 class="card-title">🌾 농부 (The Farmer)</h3>
+            <p class="card-desc">"꾸준함이 답이다."<br>안정적인 도파민 수치를 바탕으로 루틴을 지키며, 장기적인 보상을 위해 인내할 줄 아는 관리자 유형.</p>
+        </a>
+
+        <a href="gatherer.html" class="card gatherer">
+            <span class="card-type">Type 04</span>
+            <h3 class="card-title">🎒 채집가 (The Gatherer)</h3>
+            <p class="card-desc">"모든 것은 연결되어 있다."<br>다양한 분야를 넘나들며 정보를 수집하고, 서로 다른 아이디어를 연결하여 새로운 가치를 만드는 창의적 융합가.</p>
+        </a>
+    </div>
+
+</div>
+</body>
+</html>
