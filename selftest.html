@@ -15,7 +15,6 @@
             --hover-color: #34495e; 
         }
 
-        /* [디자인 통일] 전체 폰트를 Merriweather로 변경 */
         body {
             font-family: 'Merriweather', serif;
             background: var(--bg-color);
@@ -27,7 +26,6 @@
         
         .container { max-width: 700px; width: 90%; padding: 40px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; }
         
-        /* 뒤로 가기 버튼 */
         .back-btn {
             position: absolute;
             top: 20px;
@@ -35,7 +33,7 @@
             background: none;
             border: none;
             color: #999;
-            font-family: 'Merriweather', serif; /* 폰트 통일 */
+            font-family: 'Merriweather', serif;
             font-size: 0.9rem;
             font-weight: 700;
             cursor: pointer;
@@ -48,7 +46,16 @@
         .progress-bar { height: 100%; background: var(--accent-color); width: 0%; transition: width 0.3s ease; }
 
         .question-box { margin-bottom: 40px; min-height: 80px; display: flex; align-items: center; justify-content: center; }
-        .question-text { font-size: 1.4rem; font-weight: 900; line-height: 1.5; word-break: keep-all; color: #2c3e50; }
+        
+        /* [수정됨] 질문 텍스트 줄바꿈 방지 */
+        .question-text { 
+            font-size: 1.4rem; 
+            font-weight: 900; 
+            line-height: 1.5; 
+            color: #2c3e50;
+            word-break: keep-all; /* 핵심: 단어 단위 줄바꿈 */
+            overflow-wrap: break-word;
+        }
 
         .options { display: flex; gap: 10px; justify-content: space-between; margin-top: 30px; }
         
@@ -69,7 +76,12 @@
             justify-content: center;
             gap: 10px;
             -webkit-tap-highlight-color: transparent;
-            font-family: 'Merriweather', serif; /* 버튼 폰트 통일 */
+            font-family: 'Merriweather', serif;
+        }
+        
+        /* [수정됨] 버튼 텍스트 줄바꿈 방지 */
+        .option-btn span {
+            word-break: keep-all;
         }
 
         .circle { 
@@ -78,6 +90,7 @@
             border: 2px solid #ddd; 
             transition: 0.2s; 
             background: white;
+            flex-shrink: 0; /* 원이 찌그러지지 않게 고정 */
         }
 
         @media (hover: hover) {
@@ -107,18 +120,28 @@
         @media (max-width: 600px) {
             .options { flex-direction: column; gap: 8px; }
             .option-btn { flex-direction: row; padding: 15px 20px; justify-content: space-between; font-size: 1rem;}
+            /* 모바일에서 질문 글자 크기 살짝 줄임 */
+            .question-text { font-size: 1.25rem; }
         }
 
         /* 결과 화면 */
         #result-screen { display: none; }
-        .type-name { font-size: 2.5rem; font-weight: 900; margin-bottom: 20px; color: var(--accent-color); letter-spacing: -1px;}
-        .result-desc-text { font-size: 1.1rem; margin-bottom: 30px; color: #555;}
+        
+        /* [수정됨] 결과 텍스트 줄바꿈 방지 */
+        .type-name { 
+            font-size: 2.5rem; font-weight: 900; margin-bottom: 20px; color: var(--accent-color); letter-spacing: -1px;
+            word-break: keep-all; 
+            line-height: 1.2;
+        }
+        .result-desc-text { 
+            font-size: 1.1rem; margin-bottom: 30px; color: #555;
+            word-break: keep-all;
+        }
+        
         .link-btn { display: inline-block; padding: 15px 35px; background: var(--text-primary); color: white; text-decoration: none; border-radius: 50px; margin-top: 10px; font-weight: 700; transition: background 0.3s; font-family: 'Merriweather', serif;}
         .link-btn:hover { background: var(--accent-color); }
         
-        /* 반응형 폰트 조절 */
         @media (max-width: 600px) {
-            .question-text { font-size: 1.2rem; }
             .type-name { font-size: 2rem; }
         }
     </style>
@@ -136,19 +159,19 @@
 
     <div class="options">
         <button class="option-btn" onclick="nextQuestion(-2)">
-            <div class="circle"></div> <span>전혀 아니다</span>
+            <div class="circle"></div> <span>Strongly Disagree</span>
         </button>
         <button class="option-btn" onclick="nextQuestion(-1)">
-            <div class="circle"></div> <span>아니다</span>
+            <div class="circle"></div> <span>Disagree</span>
         </button>
         <button class="option-btn" onclick="nextQuestion(0)">
-            <div class="circle"></div> <span>보통이다</span>
+            <div class="circle"></div> <span>Neutral</span>
         </button>
         <button class="option-btn" onclick="nextQuestion(1)">
-            <div class="circle"></div> <span>그렇다</span>
+            <div class="circle"></div> <span>Agree</span>
         </button>
         <button class="option-btn" onclick="nextQuestion(2)">
-            <div class="circle"></div> <span>매우 그렇다</span>
+            <div class="circle"></div> <span>Strongly Agree</span>
         </button>
     </div>
 </div>
@@ -265,10 +288,10 @@
         }
 
         const resultData = {
-            's': { name: "저격수", desc: "고감도 센서와 초집중력을 가진 분석가 유형입니다.", link: "sniper.html", color: "#0984e3" },
-            'h': { name: "사냥꾼", desc: "지루함을 거부하고 위기를 돌파하는 행동가 유형입니다.", link: "hunter.html", color: "#d63031" },
-            'f': { name: "농부", desc: "꾸준함과 안정성을 중시하는 관리자 유형입니다.", link: "farmer.html", color: "#00b894" },
-            'g': { name: "채집가", desc: "다양한 아이디어를 연결하는 창의적 융합가 유형입니다.", link: "gatherer.html", color: "#fdcb6e" }
+            's': { name: "The Sniper (저격수)", desc: "고감도 센서와 초집중력을 가진 분석가 유형입니다.", link: "sniper.html", color: "#0984e3" },
+            'h': { name: "The Hunter (사냥꾼)", desc: "지루함을 거부하고 위기를 돌파하는 행동가 유형입니다.", link: "hunter.html", color: "#d63031" },
+            'f': { name: "The Farmer (농부)", desc: "꾸준함과 안정성을 중시하는 관리자 유형입니다.", link: "farmer.html", color: "#00b894" },
+            'g': { name: "The Gatherer (채집가)", desc: "다양한 아이디어를 연결하는 창의적 융합가 유형입니다.", link: "gatherer.html", color: "#fdcb6e" }
         };
 
         const result = resultData[resultType];
